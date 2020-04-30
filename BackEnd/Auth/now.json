@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "name": "take-away-auth",
+  "target": "src/server.ts",
+  "env": {
+    "MONGO_URI": "@mongo_uri",
+    "SECRET": "@secret"
+  },
+  "builds": [
+    {
+      "src": "src/server.ts",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "PUT, GET, POST, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+      },
+      "src": "/(.*)",
+      "methods": [
+        "GET",
+        "POST",
+        "OPTIONS"
+      ],
+      "dest": "src/server.ts",
+      "continue": true
+    }
+  ]
+}
