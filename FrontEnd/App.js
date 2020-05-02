@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Router, Scene } from 'react-native-router-flux'
+import Home from './Components/Home'
+import SignIn from './Components/SignIn'
+import SignUp from './Components/SignUp';
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <Router>
+      <Scene>
+        <Scene key="Home" component={Home} initial={true} hideNavBar={true}/>
+        <Scene key="SignIn" component={SignIn} hideNavBar={true} />
+        <Scene key="SignUp" component={SignUp} hideNavBar={true} />
+      </Scene>
+    </Router>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
