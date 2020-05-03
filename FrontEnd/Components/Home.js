@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native'
-import { Container, Button, Text, View } from 'native-base';
+import { StyleSheet, View } from 'react-native'
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Text, Button } from '@ui-kitten/components';
 import { Actions } from 'react-native-router-flux';
 
 function Home() {
@@ -14,18 +15,15 @@ function Home() {
     }
 
     return (
-        <View style={styles.view}>
-            <Container style={styles.container}>
+        <ApplicationProvider {...eva} theme={eva.light}>
+            <View style={styles.view}>
                 <Text style={styles.title}>Benvenuto su Take Away!!</Text>
-                <Text style={styles.subtitle}>Il modo più veloce per ordinare dai tuoi ristoranti preferiti! {"\n"} {"\n"} </Text>
-                <Button danger rounded bordered style={styles.button} onPress={goToSignIn}>
-                    <Text>Accedi</Text>
-                </Button>
-                <Button dark rounded bordered style={styles.button} onPress={goToSignUp}>
-                    <Text>Registrati</Text>
-                </Button>
-            </Container>
-        </View>
+                <Text style={styles.subtitle}>Il modo più veloce per ordinare dai </Text>
+                <Text style={styles.subtitle}> tuoi ristoranti preferiti! {"\n"} {"\n"} </Text>
+                <Button appearance='outline' status='danger' style={styles.button} onPress={goToSignIn}>Accedi</Button>
+                <Button appearance='outline' status='success' style={styles.button} onPress={goToSignUp}>Registrati</Button>
+            </View>
+        </ApplicationProvider>
     )
 }
 
@@ -35,19 +33,19 @@ export default Home
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-    },
-    container: {
         justifyContent: "center",
         alignItems: "center"
     },
     button: {
-        margin: 5
+        margin: 5,
+        width: 150,
+        borderRadius : 20
     },
     title: {
         fontWeight: "bold",
-        fontSize: 36
+        fontSize: 30
     },
     subtitle: {
-        fontSize: 20
+        fontSize: 16
     }
 });
