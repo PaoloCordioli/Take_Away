@@ -1,18 +1,20 @@
 import React from 'react';
-import { Router, Scene } from 'react-native-router-flux'
+import { NativeRouter, Route, Switch } from "react-router-native"
 import Home from './Components/Home'
 import SignIn from './Components/SignIn'
 import SignUp from './Components/SignUp';
+import Dashboard from './Components/Dashboard'
 
 function App() {
   return (
-    <Router>
-      <Scene>
-        <Scene key="Home" component={Home} initial={true} hideNavBar={true}/>
-        <Scene key="SignIn" component={SignIn} hideNavBar={true} />
-        <Scene key="SignUp" component={SignUp} hideNavBar={true} />
-      </Scene>
-    </Router>
+    <NativeRouter>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/SignIn" component={SignIn} />
+        <Route path="/SignUp" component={SignUp} />
+        <Route path="/Dashboard" component={Dashboard} />
+      </Switch>
+    </NativeRouter>
   );
 }
 

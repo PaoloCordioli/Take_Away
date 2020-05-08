@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native'
-import { Actions } from 'react-native-router-flux';
+import { useHistory } from 'react-router-native';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Text, Button, Input } from '@ui-kitten/components';
 import { checkLogin } from '../Utils/Api';
@@ -8,29 +8,30 @@ import { setItem } from '../Utils/Storage';
 
 function SignIn() {
 
+    const history = useHistory()
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
 
     const goToSignUp = () => {
-        Actions.push('SignUp')
+        history.push('SignUp')
     }
 
     const signIn = async () => {
         const result = await checkLogin(username, password)
+
         if (!result.ok) {
             setError('Password o username errati!!')
             return
         }
 
-        console.log('loggato')
+        await setItem('login', "true")
+        await setItem('token', result.data.token)
+        await setItem('username', username)
+        await setItem('password', password)
 
-        //setItem('login', true)
-        //setItem('token', result.data.token)
-        //setItem('username', username)
-        //setItem('password', password)
-
-        //Actions.push()
+        history.push('/Dashboard')
 
     }
 

@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native'
-import { Actions } from 'react-native-router-flux';
+import { useHistory } from 'react-router-native';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Text, Button, Input } from '@ui-kitten/components';
 import { checkRegistration } from '../Utils/Api'
 
 function SignUp() {
 
-    const [username, setUsername] = useState("") 
+    const history = useHistory()
+
+    const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [rePassword, setRePassword] = useState("")
     const [error, setError] = useState("")
 
     const goToSignIn = () => {
-        Actions.push('SignIn')
+        history.push('SignIn')
     }
 
     const signUp = async () => {
@@ -29,7 +31,7 @@ function SignUp() {
             return
         }
 
-        Actions.SignIn()
+        history.puhs('/SignIn')
     }
 
     return (
