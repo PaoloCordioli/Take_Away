@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, View, Image } from 'react-native'
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Text, Button } from '@ui-kitten/components';
-import { getItem } from '../Utils/Storage';
-import { useHistory, Redirect } from 'react-router-native';
+import { useHistory } from 'react-router-native';
 
 
 function Home() {
+
     const history = useHistory()
-
-    const [login, setLogin] = useState("")
-
-    useEffect(() => {
-        getItem('login').then((value) => {
-            if (value === "true")
-                setLogin(true)
-            else setLogin(false)
-        })
-    }, [])
 
     const goToSignIn = async () => {
         history.push('SignIn')
@@ -27,25 +17,10 @@ function Home() {
         history.push('SignUp')
     }
 
-    if (login) {
-        return (
-            <Redirect to="/Dashboard" />
-        )
-    }
-
-    if (login === "") {
-        return (
-            <ApplicationProvider {...eva} theme={eva.light}>
-                <View style={styles.view}>
-                    <Text style={styles.title}> Loading ...</Text>
-                </View>
-            </ApplicationProvider>
-        )
-    }
-
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
             <View style={styles.view}>
+                <Image source={require('../assets/take_away_logo.png')} style={styles.image} />
                 <Text style={styles.title}>Benvenuto su Take Away!!</Text>
                 <Text style={styles.subtitle}>Il modo più veloce per ordinare dai </Text>
                 <Text style={styles.subtitle}> tuoi ristoranti preferiti! {"\n"} {"\n"} </Text>
@@ -76,5 +51,14 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 16
+    },
+    image: {
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        marginBottom: 30,
+        marginTop: -25,
+        borderColor: 'black',
+        borderWidth: 2
     }
 });
