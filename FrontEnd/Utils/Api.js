@@ -25,3 +25,18 @@ export async function checkRegistration(username, password) {
 
     return result
 }
+
+export async function getNameRestaurants() {
+    const token = await getItem('token')
+
+    const result = await fetch('https://take-away-restaurants.now.sh/restaurants_name', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        },
+    }).then((res) => res.json())
+
+    return result.data.restaurants
+}

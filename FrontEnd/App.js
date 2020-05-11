@@ -3,7 +3,7 @@ import { NativeRouter, Route, Switch } from "react-router-native"
 import Home from './Components/Home'
 import SignIn from './Components/SignIn'
 import SignUp from './Components/SignUp';
-import Dashboard from './Components/Dashboard'
+import DrawerNavigation from './Components/DrawerNavigation'
 import AccessManager from './Components/AccessManager'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
         <Route path="/Home" component={Home} />
         <Route path="/SignIn" component={SignIn} />
         <Route path="/SignUp" component={SignUp} />
-        <Route path="/Dashboard" component={Dashboard} />
+        <Route path="/Dashboard" component={DrawerNavigation} />
       </Switch>
     </NativeRouter>
   );

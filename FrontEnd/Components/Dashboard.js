@@ -1,31 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import * as eva from '@eva-design/eva';
-import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
-import { useHistory } from 'react-router-native'
-import { setItem } from '../Utils/Storage';
-
+import { ApplicationProvider, Text } from '@ui-kitten/components';
+import { getNameRestaurants } from '../Utils/Api'
+import NameRestaurant from './NameRestaurant'
 
 function Dashboard() {
 
-    const history = useHistory()
+    const [restaurants, setRestaurants] = useState([])
 
-    const logout = async () => {
-        await setItem('login', "false")
-        await setItem('token', "")
-        await setItem('username', "")
-        await setItem('password', "")
-
-        history.push('/SignIn')
-    }
+    useEffect(() => {
+        getNameRestaurants().then((res) => setRestaurants(res))
+    }, [])
 
     return (
-        <ApplicationProvider {...eva} theme={eva.light}>
-            < Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text category='h1'>DASHBOARD</Text>
-                <Button appearance='outline' status='success' onPress={logout}>Esci</Button>
-            </Layout >
+        <ApplicationProvider {...eva} theme={eva.light} >
+            <Text style={styles.text}>Seleziona un ristorante</Text>
+            <View style={styles.list}>
+                <NameRestaurant style={styles.list} restaurants={restaurants} />
+            </View>
         </ApplicationProvider>
     )
 }
 
 export default Dashboard
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: "bold",
+        marginTop: 50
+    },
+    list: {
+        marginLeft: 50,
+        marginRight: 50
+    }
+})

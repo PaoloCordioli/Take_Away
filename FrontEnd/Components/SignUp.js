@@ -31,7 +31,7 @@ function SignUp() {
             return
         }
 
-        history.puhs('/SignIn')
+        history.push('/SignIn')
     }
 
     return (
