@@ -27,8 +27,9 @@ export class MongoDB {
         return restaurants
     }
 
-    public async get_by_name(name: string): Promise<Array<any>> {
-        const restaurant = await this.collection.find({ name: name }).toArray()
+    public async get_by_id(id: string): Promise<Array<any>> {
+        const _id = new ObjectID(id)
+        const restaurant = await this.collection.findOne({ _id: _id })
         return restaurant
     }
 

@@ -71,7 +71,7 @@ server.get('/restaurants_name', async (req, res) => { // ritorno tutti i nomi de
     })
 })
 
-server.get('/restaurants/:name', async (req, res) => { // ritorno un ristorante
+server.get('/restaurants/:id', async (req, res) => { // ritorno un ristorante
     const token = req.headers['x-access-token']
     const authenticated = await authentication(token)
 
@@ -85,11 +85,10 @@ server.get('/restaurants/:name', async (req, res) => { // ritorno un ristorante
         return
     }
 
-    let { name } = req.params
-    name = name.replace("_", " ")
+    let { id } = req.params
 
     const database = await MongoDB.get_instance()
-    const restaurant = await database.get_by_name(name)
+    const restaurant = await database.get_by_id(id)
 
     if (restaurant.length === 0) {
         res.status(401).send({
