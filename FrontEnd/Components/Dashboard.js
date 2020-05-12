@@ -3,9 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Text } from '@ui-kitten/components';
 import { getNameRestaurants } from '../Utils/Api'
-import NameRestaurant from './NameRestaurant'
+import ListRestaurantName from './ListRestaurantName'
 
-function Dashboard() {
+function Dashboard({ navigation }) {
 
     const [restaurants, setRestaurants] = useState([])
 
@@ -17,7 +17,7 @@ function Dashboard() {
         <ApplicationProvider {...eva} theme={eva.light} >
             <Text style={styles.text}>Seleziona un ristorante</Text>
             <View style={styles.list}>
-                <NameRestaurant style={styles.list} restaurants={restaurants} />
+                <ListRestaurantName style={styles.list} restaurants={restaurants} navigation={navigation} />
             </View>
         </ApplicationProvider>
     )

@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
@@ -8,20 +7,12 @@ import { DrawerContent } from './DrawerContent'
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import Dashboard from './Dashboard'
-
-
-const About = () => {
-    return (
-        <View>
-            <Text>About</Text>
-        </View>
-    )
-}
+import Restaurant from './Restaurant'
+import ConfirmOrder from './ConfirmOrder'
+import MyOrder from './MyOrder'
 
 
 const DashboardStack = createStackNavigator()
-const AboutStack = createStackNavigator()
-const Drawer = createDrawerNavigator()
 
 const DashboardStackScreen = ({ navigation }) => (
     <DashboardStack.Navigator screenOptions={{
@@ -40,22 +31,50 @@ const DashboardStackScreen = ({ navigation }) => (
 )
 
 
-const AboutStackScreen = ({ navigation }) => (
-    <AboutStack.Navigator screenOptions={{
+const MyOrderStack = createStackNavigator()
+
+const MyOrderStackScreen = ({ navigation }) => (
+    <MyOrderStack.Navigator screenOptions={{
         headerTitleStyle: {
             fontWeight: 'bold'
         }
     }}>
-        <AboutStack.Screen name="Le mie Prenotazioni" component={About} options={{
+        <MyOrderStack.Screen name="Le mie Prenotazioni" component={MyOrder} options={{
             title: 'Le mie Prenotazioni',
             headerLeft: () => (
                 <Icon.Button name="menu" size={25} color="#000000" backgroundColor="#ffffff"
                     onPress={() => { navigation.openDrawer() }} />
             )
         }} />
-    </AboutStack.Navigator>
+    </MyOrderStack.Navigator>
 )
 
+
+const Stack = createStackNavigator()
+
+function Root({ navigation }) {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Restaurant" component={Restaurant} options={{
+                title: "Ordina",
+                headerLeft: () => (
+                    <Icon.Button name="arrow-left" size={25} color="#000000" backgroundColor="#ffffff"
+                        onPress={() => { navigation.goBack() }} />
+                )
+            }} />
+            <Stack.Screen name="Confirm" component={ConfirmOrder} options={{
+                title: "Conferma il tuo ordine",
+                headerLeft: () => (
+                    <Icon.Button name="arrow-left" size={25} color="#000000" backgroundColor="#ffffff"
+                        onPress={() => { navigation.navigate('Restaurant') }} />
+                )
+            }} />
+
+        </Stack.Navigator>
+    );
+}
+
+const Drawer = createDrawerNavigator()
 
 function Menu() {
     return (
@@ -63,7 +82,8 @@ function Menu() {
             <NavigationContainer>
                 <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
                     <Drawer.Screen name="Home" component={DashboardStackScreen} />
-                    <Drawer.Screen name="Reservations" component={AboutStackScreen} />
+                    <Drawer.Screen name="Reservations" component={MyOrderStackScreen} />
+                    <Drawer.Screen name="Root" component={Root} />
                 </Drawer.Navigator>
             </NavigationContainer>
         </ApplicationProvider>

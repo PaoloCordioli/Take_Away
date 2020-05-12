@@ -40,3 +40,18 @@ export async function getNameRestaurants() {
 
     return result.data.restaurants
 }
+
+export async function getRestaurantByID(id) {
+    const token = await getItem('token')
+
+    const result = await fetch(`https://take-away-restaurants.now.sh/restaurants/${id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        },
+    }).then((res) => res.json())
+
+    return result.data.restaurant
+}

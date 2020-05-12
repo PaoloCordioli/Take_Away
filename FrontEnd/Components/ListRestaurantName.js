@@ -1,21 +1,27 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { Button, ListItem, List } from '@ui-kitten/components'
 
 function NameRestaurant(props) {
 
-    const renderItemAccessory = () => (
-        <Button size='small' appearance='outline' style={styles.button} onPress={() => console.log('qui')}>
-            <Text style={{ color: '#000000' }}  >Vedi</Text>
-        </Button>
-    );
+    const renderItemAccessory = (item) => {
+        return (
+            <Button size='small' appearance='outline' style={styles.button}
+                onPress={() => props.navigation.navigate('Root', {
+                    screen: 'Restaurant',
+                    params: { item },
+                })}>
+                <Text style={{ color: '#000000' }} >Vedi</Text>
+            </Button >
+        )
+    };
 
     const renderItem = ({ item }) => (
         <ListItem
             style={styles.item}
             key={item._id}
             title={item.name}
-            accessoryRight={renderItemAccessory}
+            accessoryRight={() => renderItemAccessory(item)}
         />
     );
 
