@@ -1,11 +1,11 @@
 import React from 'react'
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/Feather'
 import { DrawerContent } from './DrawerContent'
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider } from '@ui-kitten/components';
 import Dashboard from './Dashboard'
 import Restaurant from './Restaurant'
 import ConfirmOrder from './ConfirmOrder'
@@ -56,7 +56,7 @@ function Root({ navigation }) {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Restaurant" component={Restaurant} options={{
-                title: "Ordina",
+                title: "Fai il tuo ordine",
                 headerLeft: () => (
                     <Icon.Button name="arrow-left" size={25} color="#000000" backgroundColor="#ffffff"
                         onPress={() => { navigation.goBack() }} />
