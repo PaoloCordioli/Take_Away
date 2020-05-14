@@ -1,65 +1,72 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Card, Text, Button } from '@ui-kitten/components';
+import React, { useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { Text, Layout } from '@ui-kitten/components';
+import Icon from 'react-native-vector-icons/AntDesign'
+
 
 function PropertyRestaurant(props) {
 
-    const footer = () => (
-        <View style={styles.footerContainer}>
-            <Button style={styles.footerControl} size='small' status='danger'
-                onPress={() => console.log('add')}> Aggiungi </Button>
-            <Button style={styles.footerControl} size='small' status='success'
-                onPress={() => console.log('remove')}> Rimuovi </Button>
-        </View>
-    );
+    const [count, setCount] = useState(0)
 
-    const createCardTime = (e) => (
-        <Card key={Math.random()} style={styles.card} footer={footer}>
-            <Text>
-                <Text style={{ fontWeight: 'bold', fontStyle: 'italic' }}>{e.name}: </Text>
-                <Text>{e.price}</Text>
-            </Text>
-            <Text>
-                <Text style={{ fontWeight: 'bold' }}>Descrizione: </Text>
-                <Text >{e.ingredients}</Text>
-            </Text>
-        </Card>
-    )
-
-    const createList = () => {
-        if (props.restaurant === []) {
-            return <Text></Text>
-        } else {
-            return props.restaurant.menu.map(createCardTime)
-        }
+    const increase = () => {
+        setCount(count + 1)
     }
 
+    const decrement = () => {
+        if (count === 0)
+            return
+        setCount(count - 1)
+    }
 
     return (
-        <View>
-            {createList()}
-        </View>
-    );
+        <Layout style={styles.container} key={Math.random()}>
+            <Layout style={styles.layout}  >
+                <Text>
+                    <Text style={{ fontWeight: 'bold', fontStyle: 'italic' }}>{props.item.name}: </Text>
+                    <Text>{props.item.price}</Text>
+                </Text>
+                <Text>
+                    <Text style={{ fontWeight: 'bold' }}>Descrizione: </Text>
+                    <Text >{props.item.ingredients}</Text>
+                </Text>
+            </Layout>
+            <Layout style={styles.layoutButton} >
+                <Icon.Button name="pluscircleo" color="#000000" backgroundColor="#ffffff" onPress={increase} />
+                <Icon.Button name="minuscircleo" color="#000000" backgroundColor="#ffffff" onPress={decrement} />
+            </Layout>
+            <Layout style={styles.layoutText}>
+                <Text>{count}</Text>
+            </Layout>
+        </Layout>
+    )
+
+
+
 }
 
 export default PropertyRestaurant
 
 
 const styles = StyleSheet.create({
-    card: {
-        marginBottom: 5,
-        borderRadius: 20,
-        borderColor: '#000000',
-        borderWidth: 1,
-        marginRight : 10,
-        marginLeft: 10
-    },
-    footerContainer: {
+    container: {
+        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        marginBottom: 5,
+        marginHorizontal: 20,
+        borderWidth: 1,
     },
-    footerControl: {
-        marginHorizontal: 5,
-        marginBottom: 5
+    layout: {
+        flex: 2,
+        marginLeft: 10,
+        justifyContent: "center"
     },
+    layoutButton: {
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    layoutText: {
+        marginRight: 25,
+        alignItems: "center",
+        justifyContent: "center"
+    }
 });

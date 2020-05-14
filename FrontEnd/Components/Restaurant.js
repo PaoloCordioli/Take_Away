@@ -1,37 +1,32 @@
-import React, { useState } from 'react'
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 import { Button } from '@ui-kitten/components'
 import { getRestaurantByID } from '../Utils/Api'
 import PropertyRestaurant from './PropertyRestaurant'
 
-//<Button onPress={() => navigation.navigate('Reservations')}>CLick</Button>
 
 function Restaurant({ route, navigation }) {
 
-    const [restaurant, setRestaurant] = useState("")
+    const [restaurant, setRestaurant] = useState({ menu: [] })
 
-    useFocusEffect(() => {
-        getRestaurantByID(route.params.item._id).then((res) => setRestaurant(res))
-    }, []);
+    useEffect(() => {
+        const data = navigation.addListener('focus', () => {
+            getRestaurantByID(route.params.item._id).then((res) => setRestaurant(res))
+        });
 
-    if (restaurant === "") {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>{route.params.item.name}</Text>
-            </View>
-        )
-    }
-
+        return data
+    }, [navigation, route]);
 
     return (
-        <>
+        <View>
             <ScrollView contentContainerStyle={styles.container} >
                 <Text style={styles.title}>{route.params.item.name}</Text>
-                <PropertyRestaurant restaurant={restaurant} />
+                {restaurant.menu.map((e) => {
+                    return <PropertyRestaurant item={e} key={Math.random()} />
+                })}
                 <Button appearance='outline' style={styles.button} onPress={() => navigation.navigate('Confirm')}>Ordina</Button>
             </ScrollView>
-        </>
+        </View>
     );
 }
 
@@ -48,7 +43,7 @@ const styles = StyleSheet.create({
         padding: 25
     },
     button: {
-        marginTop : 5,
+        marginTop: 5,
         width: 200,
         backgroundColor: 'white',
         borderWidth: 1,
