@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native';
 import { Button } from '@ui-kitten/components'
 import { getRestaurantByID } from '../Utils/Api'
 import PropertyRestaurant from './PropertyRestaurant'
@@ -9,13 +10,15 @@ function Restaurant({ route, navigation }) {
 
     const [restaurant, setRestaurant] = useState({ menu: [] })
 
-    useEffect(() => {
-        const data = navigation.addListener('focus', () => {
+    useFocusEffect(
+        useCallback(() => {
             getRestaurantByID(route.params.item._id).then((res) => setRestaurant(res))
-        });
 
-        return data
-    }, [navigation, route]);
+            return () => {
+                setRestaurant({ menu: [] })
+            };
+        }, [route])
+    );
 
     return (
         <View>
