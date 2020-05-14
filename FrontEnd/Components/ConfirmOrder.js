@@ -3,6 +3,7 @@ import { View, Text } from 'react-native'
 //<Button onPress={() => navigation.navigate('Reservations')}>CLick</Button>
 
 function ConfirmOrder({ route, navigation }) {
+    console.log(route.params.menu)
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

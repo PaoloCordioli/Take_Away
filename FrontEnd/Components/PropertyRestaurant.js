@@ -8,14 +8,16 @@ function PropertyRestaurant(props) {
 
     const [count, setCount] = useState(0)
 
-    const increase = () => {
+    const increase = async () => {
         setCount(count + 1)
+        props.push(props.item)
     }
 
     const decrement = () => {
         if (count === 0)
             return
         setCount(count - 1)
+        props.remove(props.item.name)
     }
 
     return (
@@ -39,9 +41,6 @@ function PropertyRestaurant(props) {
             </Layout>
         </Layout>
     )
-
-
-
 }
 
 export default PropertyRestaurant

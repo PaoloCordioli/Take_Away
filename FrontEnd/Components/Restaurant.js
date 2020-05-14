@@ -9,6 +9,7 @@ import PropertyRestaurant from './PropertyRestaurant'
 function Restaurant({ route, navigation }) {
 
     const [restaurant, setRestaurant] = useState({ menu: [] })
+    let ordered = []
 
     useFocusEffect(
         useCallback(() => {
@@ -20,14 +21,31 @@ function Restaurant({ route, navigation }) {
         }, [route])
     );
 
+    const push = (e) => {
+        ordered.push({
+            name: e.name,
+            price: e.price
+        })
+    }
+
+    const remove = (name) => {
+        const indexToDelete = ordered.map((e) => { return e.name }).lastIndexOf(name);
+
+        ordered = ordered.filter((item, index) => {
+            if (index !== indexToDelete) {
+                return item;
+            }
+        });
+    }
+
     return (
         <View>
             <ScrollView contentContainerStyle={styles.container} >
                 <Text style={styles.title}>{route.params.item.name}</Text>
                 {restaurant.menu.map((e) => {
-                    return <PropertyRestaurant item={e} key={Math.random()} />
+                    return <PropertyRestaurant item={e} key={Math.random()} push={push} remove={remove} />
                 })}
-                <Button appearance='outline' style={styles.button} onPress={() => navigation.navigate('Confirm')}>Ordina</Button>
+                <Button appearance='outline' style={styles.button} onPress={() => navigation.navigate('Confirm', { menu: ordered })}>Ordina</Button>
             </ScrollView>
         </View>
     );
