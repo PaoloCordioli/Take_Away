@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View, StyleSheet } from 'react-native'
+import { ScrollView, View, StyleSheet, Alert } from 'react-native'
 import { Card, Text, Button } from '@ui-kitten/components';
 import { createReservation } from '../Utils/Api';
 
@@ -35,8 +35,9 @@ function ConfirmOrder({ route, navigation }) {
 
     const confirm = async () => {
         const result = await createReservation(route.params.menu, route.params.restaurant, total_price)
-        if (result.ok)
-            navigation.navigate('Reservations')
+        if (result.ok) {
+            Alert.alert('Il tuo ordine è stato accettato', "Continua pure a usare l'app", [{ text: 'Torna al menu', onPress: () => navigation.navigate('Home') }])
+        }
     }
 
     return (

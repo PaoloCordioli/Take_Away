@@ -71,9 +71,7 @@ export async function createReservation(ordered, restaurant, total_price) {
             user: user,
             restaurant: restaurant,
             ordered: ordered,
-            total_price: total_price,
-            position: "",
-            date: ""
+            total_price: total_price
         })
     }).then((res) => res.json())
 
@@ -93,5 +91,5 @@ export async function getReservations() {
         }
     }).then((res) => res.json())
 
-    return result
+    return result.data.reservations
 }
