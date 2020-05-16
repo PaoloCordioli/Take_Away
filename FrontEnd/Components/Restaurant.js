@@ -24,7 +24,8 @@ function Restaurant({ route, navigation }) {
     const push = (e) => {
         ordered.push({
             name: e.name,
-            price: e.price
+            price: e.price,
+            description: e.ingredients
         })
     }
 
@@ -45,7 +46,8 @@ function Restaurant({ route, navigation }) {
                 {restaurant.menu.map((e) => {
                     return <PropertyRestaurant item={e} key={Math.random()} push={push} remove={remove} />
                 })}
-                <Button appearance='outline' style={styles.button} onPress={() => navigation.navigate('Confirm', { menu: ordered })}>Ordina</Button>
+                <Button appearance='outline' style={styles.button}
+                    onPress={() => navigation.navigate('Confirm', { menu: ordered, restaurant: route.params.item.name })}> Ordina </Button>
             </ScrollView>
         </View>
     );

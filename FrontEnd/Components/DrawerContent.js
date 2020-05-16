@@ -5,14 +5,17 @@ import { Drawer } from '@ui-kitten/components'
 import { useHistory } from 'react-router-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import IconTwo from 'react-native-vector-icons/MaterialIcons'
-import { clear } from '../Utils/Storage'
+import { removeItem } from '../Utils/Storage'
 
 export function DrawerContent(props) {
 
     const history = useHistory()
 
-    const logout = () => {
-        clear()
+    const logout = async () => {
+        await removeItem('login')
+        await removeItem('username')
+        await removeItem('password')
+        await removeItem('token')
 
         history.push('/SignIn')
     }

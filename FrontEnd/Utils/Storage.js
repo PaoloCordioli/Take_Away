@@ -13,6 +13,6 @@ export async function removeItem(key) {
     AsyncStorage.removeItem(key)
 }
 
-export function clear() {
+export async function clear() {
     AsyncStorage.clear()
 }

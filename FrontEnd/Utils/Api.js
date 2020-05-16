@@ -55,3 +55,43 @@ export async function getRestaurantByID(id) {
 
     return result.data.restaurant
 }
+
+export async function createReservation(ordered, restaurant, total_price) {
+    const user = await getItem('username')
+    const token = await getItem('token')
+
+    const result = await fetch("https://take-away-reservations.now.sh/reservations", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        },
+        body: JSON.stringify({
+            user: user,
+            restaurant: restaurant,
+            ordered: ordered,
+            total_price: total_price,
+            position: "",
+            date: ""
+        })
+    }).then((res) => res.json())
+
+    return result
+}
+
+export async function getReservations() {
+    const user = await getItem('username')
+    const token = await getItem('token')
+
+    const result = await fetch(`https://take-away-reservations.now.sh/reservations/${user}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        }
+    }).then((res) => res.json())
+
+    return result
+}
