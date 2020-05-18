@@ -5,6 +5,9 @@ import SignIn from './Components/SignIn'
 import SignUp from './Components/SignUp';
 import DrawerNavigation from './Components/DrawerNavigation'
 import AccessManager from './Components/AccessManager'
+import { YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings(['VirtualizedLists should never be nested', "Can't perform a React state update on an unmounted component"]);
 
 function App() {
   return (

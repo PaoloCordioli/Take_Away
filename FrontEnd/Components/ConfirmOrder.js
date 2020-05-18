@@ -1,26 +1,12 @@
 import React from 'react'
 import { ScrollView, View, StyleSheet, Alert } from 'react-native'
-import { Card, Text, Button } from '@ui-kitten/components';
+import { Text, Button, List, ListItem } from '@ui-kitten/components';
 import { createReservation } from '../Utils/Api';
 
 
-const header = (e) => (
-    <View>
-        <Text>
-            <Text style={{ fontWeight: 'bold' }}>{e.name} : </Text>
-            <Text>{e.price}</Text>
-        </Text>
-    </View>
+const renderItem = ({ item }) => (
+    <ListItem style={styles.listItem} title={item.name} description={item.description} accessoryRight={() => { return <Text>{item.price}</Text> }} />
 )
-
-const createCard = (e) => (
-    <Card style={styles.card} header={() => header(e)} key={Math.random()}>
-        <Text>
-            {e.description}
-        </Text>
-    </Card>
-)
-
 
 function ConfirmOrder({ route, navigation }) {
     let total_price = 0
@@ -30,7 +16,7 @@ function ConfirmOrder({ route, navigation }) {
             const price = parseFloat(e.price.slice(0, e.price.length - 1))
             total_price += price
         })
-        return total_price
+        return total_price + 2
     }
 
     const confirm = async () => {
@@ -41,12 +27,15 @@ function ConfirmOrder({ route, navigation }) {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView>
             <Text style={styles.text}>Ecco il tuo ordine da {route.params.restaurant}: </Text>
-            {route.params.menu.map((e) => { return createCard(e) })}
-            <Text>Prezzo toale : {get_total_price()} € </Text>
-            <Button style={styles.button} appearance='outline'
-                onPress={confirm}> Conferma ordine </Button>
+            <List style={styles.list} data={route.params.menu} renderItem={renderItem} />
+            <Text style={styles.price}> Costo di spedizione: 2.00 €</Text>
+            <Text style={styles.price}>Prezzo toale : {get_total_price()} € </Text>
+            <View style={styles.buttonContainer}>
+                <Button style={styles.button} appearance='outline'
+                    onPress={confirm}> Conferma ordine </Button>
+            </View>
         </ScrollView>
     );
 }
@@ -55,22 +44,16 @@ export default ConfirmOrder
 
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center'
-    },
     text: {
         margin: 10,
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 25
     },
-    card: {
-        flex: 1,
-        width: '90%',
-        alignItems: 'center',
-        borderColor: 'black',
-        borderRadius: 25,
-        margin: 5
+    price: {
+        padding: 10,
+        fontWeight: 'bold',
+        textAlign: "right"
     },
     button: {
         marginTop: 5,
@@ -79,5 +62,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#000000',
         borderRadius: 10,
+    },
+    buttonContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    list: {
+        marginHorizontal: 10,
+        backgroundColor: '#f5f5f5'
+    },
+    listItem: {
+        marginTop: 10,
+        borderRadius: 20,
+        borderColor: 'black',
+        borderWidth: 1
     }
 })

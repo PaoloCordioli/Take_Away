@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Text, List, ListItem } from '@ui-kitten/components'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 function SingleOrder(props) {
 
@@ -23,9 +23,9 @@ function SingleOrder(props) {
     let reservations = props.reservations.map(createCard)
 
     return (
-        <ScrollView>
+        <View>
             {reservations}
-        </ScrollView>
+        </View>
     )
 }
 

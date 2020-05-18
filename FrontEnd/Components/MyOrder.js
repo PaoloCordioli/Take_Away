@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 import { getReservations } from '../Utils/Api';
 import SingleOrder from './SingleOrder'
-import { ApplicationProvider } from '@ui-kitten/components';
 
 
 function MyOrder() {
@@ -23,12 +22,10 @@ function MyOrder() {
 
     if (reservations) {
         return (
-            <View>
+            <ScrollView>
                 <Text style={styles.title}>Ecco i tuoi ordini effettuati</Text>
-                <ScrollView>
-                    <SingleOrder reservations={reservations}></SingleOrder>
-                </ScrollView>
-            </View>
+                <SingleOrder reservations={reservations}></SingleOrder>
+            </ScrollView>
         )
     }
 
