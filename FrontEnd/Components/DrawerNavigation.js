@@ -79,8 +79,8 @@ const Drawer = createDrawerNavigator()
 function Menu() {
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
-            <NavigationContainer>
-                <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+            <NavigationContainer >
+                <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />} initialRouteName="Home">
                     <Drawer.Screen name="Home" component={DashboardStackScreen} />
                     <Drawer.Screen name="Reservations" component={MyOrderStackScreen} />
                     <Drawer.Screen name="Root" component={Root} />

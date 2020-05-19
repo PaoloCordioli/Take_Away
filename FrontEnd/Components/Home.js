@@ -9,7 +9,7 @@ function Home() {
 
     const history = useHistory()
 
-    const goToSignIn = async () => {
+    const goToSignIn = () => {
         history.push('SignIn')
     }
 

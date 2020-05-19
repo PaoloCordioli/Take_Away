@@ -11,6 +11,8 @@ function Dashboard({ navigation }) {
 
     useEffect(() => {
         getNameRestaurants().then((res) => setRestaurants(res))
+
+        return () => setRestaurants([])
     }, [])
 
     return (
