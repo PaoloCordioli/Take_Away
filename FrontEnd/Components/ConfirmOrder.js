@@ -16,7 +16,8 @@ function ConfirmOrder({ route, navigation }) {
             const price = parseFloat(e.price.slice(0, e.price.length - 1))
             total_price += price
         })
-        return total_price + 2
+        total_price = total_price + 2
+        return total_price
     }
 
     const confirm = async () => {
